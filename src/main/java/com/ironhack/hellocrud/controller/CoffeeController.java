@@ -2,6 +2,7 @@ package com.ironhack.hellocrud.controller;
 
 import com.ironhack.hellocrud.model.Coffee;
 import com.ironhack.hellocrud.model.CoffeeProcess;
+import com.ironhack.hellocrud.model.UpdateCoffeeNameRequest;
 import com.ironhack.hellocrud.service.CoffeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,22 @@ public class CoffeeController {
     @ResponseStatus(HttpStatus.CREATED)
     public Coffee create(@RequestBody Coffee coffee){
         return coffeeService.create(coffee);
+    }
+
+
+    @PutMapping("/{id}") // lo solemos utilizar cuando queremos modificar el objecto por entero
+    public Coffee update(@PathVariable Long id,@RequestBody Coffee updatedCoffee){
+        return coffeeService.update(id, updatedCoffee);
+    }
+
+    @PatchMapping("/{id}/name")
+    public Coffee updateName(@PathVariable Long id, @RequestBody UpdateCoffeeNameRequest request){
+        return coffeeService.updateName(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        coffeeService.delete(id);
     }
 }
